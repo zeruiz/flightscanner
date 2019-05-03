@@ -15,7 +15,7 @@ A tibble.
 \description{
 Extract information from request response of live flight search endpoint.
 Information includes the LegId, SegmentIds, OriginId, DestinationId,
-DepartureTime, ArrivalTime, Duration, No.Stops, Directionality, and Stops.
+DepartureTime, ArrivalTime, Duration, No.Stops, and Stops.
 
 Stops contains the StopId, and Layover.
 }
@@ -24,6 +24,6 @@ Stops contains the StopId, and Layover.
 SetAPI("skyscanner-skyscanner-flight-search-v1.p.rapidapi.com", "YOUR_API_KEY")
 resp <- CreateSession(origin = "SFO", destination = "LHR", startDate = "2019-07-01")
 resp <- PollSession(respondPOST = resp)
-GetLegs(resp)
+flightscanner:::GetLegs(resp)
 }
 }

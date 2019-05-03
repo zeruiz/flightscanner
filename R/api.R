@@ -85,9 +85,16 @@ CreateSession <- function(origin, destination, startDate, returnDate = NULL,
                infants = infants,
                includeCarriers = includeCarriers,
                excludeCarriers = excludeCarriers)
+  checkmate::assertCharacter(c(origin, destination, country, currency, locale))
+  checkmate::assertDate(c(ymd(startDate), ymd(returnDate)))
+  if(!is.null(returnDate)){
+  checkmate::assert_true(ymd(returnDate) > ymd(startDate))
+  }
+  checkmate::assert_numeric(adults)
 
   resp <- POST(url, add_headers(header), body = body, encode = "form")
   flag <- CheckStatus(resp)
+  checkmate::assertClass(resp,"response")
   resp
 }
 
@@ -154,6 +161,8 @@ PollSession <- function(sessionKey, respondPOST = NULL,
                                    "inboundarrivetime", "inbounddeparttime"),
                       sortOrder = c("asc", "desc"))
   # Add checking here.
+  checkmate::assert_choice(sortType, par.options$sortType)
+  checkmate::assert_choice(sortOrder, par.options$sortOrder)
 
   if (missing(sessionKey)) sessionKey <- SessionKey(respondPOST)
   if (!missing(sortType)) sortType <- match.arg(sortType, par.options$sortType)
@@ -181,9 +190,13 @@ PollSession <- function(sessionKey, respondPOST = NULL,
                 inboundArriveStartTime = inboundArriveStartTime,
                 inboundArriveEndTime = inboundArriveEndTime)
 
-  resp <- GET(url, add_headers(header), path = path, query = query)
+  for (count in 0:100) {
+    resp <- GET(url, add_headers(header), path = path, query = query)
+    if (content(resp)$Status == "UpdatesComplete") break
+  }
+  if (count) message("Try to update data ", count, " times.")
   flag <- CheckStatus(resp)
-  if (content(resp)$Status != "UpdatesComplete") warning("Data Updating is not Complete.")
+  checkmate::assertClass(resp,"response")
   resp
 }
 
@@ -256,13 +269,13 @@ BrowseFlight <- function(endpoint = c("quotes", "routes", "dates"),
 #'
 #' @param x A \code{\link[httr:response]{response()}} object or a number.
 #'
-#' @return 1 if has an error, otherwise 0.
+#' @return \code{TRUE} if has an error, otherwise \code{FALSE}.
 CheckStatus <- function(x) {
   # warn_for_status(x)
   if (http_error(x)) {
     warning(http_status(x)$message)
-    1
-  } else 0
+    TRUE
+  } else FALSE
 }
 
 
@@ -273,14 +286,6 @@ CheckStatus <- function(x) {
 #' @param x A \code{\link[httr:response]{response()}} object.
 #'
 #' @return Session key.
-#' @export
-#'
-#' @examples
-#' \dontrun{
-#' SetAPI("skyscanner-skyscanner-flight-search-v1.p.rapidapi.com", "YOUR_API_KEY")
-#' resp <- CreateSession(origin = "SFO", destination = "LHR", startDate = "2019-07-01")
-#' SessionKey(resp)
-#' }
 SessionKey <- function(x) {
   location <- headers(x)$location
   y <- strsplit(location, "/")[[1]]
