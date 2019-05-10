@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Convert missing arguments to NULL. — Args2null • flightscanner</title>
+<title>Convert missing arguments to NULL. — Args2Null • flightscanner</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,9 +30,11 @@
 
 
 
-<meta property="og:title" content="Convert missing arguments to NULL. — Args2null" />
+<meta property="og:title" content="Convert missing arguments to NULL. — Args2Null" />
 
 <meta property="og:description" content="Convert missing arguments to NULL." />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -78,6 +80,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette.html">Flightscanner: Find the Best Flight For You!</a>
+    </li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -101,7 +115,7 @@
     <div class="page-header">
     <h1>Convert missing arguments to NULL.</h1>
     <small class="dont-index">Source: <a href='https://github.com/MinZhang95/flightscanner/blob/master/R/schedule.R'><code>R/schedule.R</code></a></small>
-    <div class="hidden name"><code>Args2null.Rd</code></div>
+    <div class="hidden name"><code>Args2Null.Rd</code></div>
     </div>
 
     <div class="ref-description">
@@ -110,7 +124,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>Args2null</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>Args2Null</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -126,6 +140,8 @@
     <p>Converted argument.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/Args2Null'>Args2Null</a></span>(<span class='st'>"character"</span>)</div><div class='output co'>#&gt; [1] "character"</div><div class='input'><span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/Args2Null'>Args2Null</a></span>(<span class='fl'>NA</span>)</div><div class='output co'>#&gt; NULL</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -133,7 +149,9 @@
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

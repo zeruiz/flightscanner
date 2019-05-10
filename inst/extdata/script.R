@@ -1,6 +1,6 @@
 #!/usr/bin/env Rscript
 cat("--------------------------------------------------------------------------------\n")
-cat(sprintf("Time: %s\n", Sys.time()))
+cat("Time:", as.character(Sys.time()), "\n")
 
 args <- commandArgs(trailingOnly = TRUE)
 if (length(args) < 4 || length(args) > 5) {
@@ -11,17 +11,16 @@ if (length(args) < 4 || length(args) > 5) {
 
 setwd(args[1])
 library(flightscanner)
-SetAPI(host = "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-       key = "3e85a0e43cmshac6dba6fde57066p1c1145jsn1e6f8c3d0e33")
 
-cat(sprintf("Working Directory: %s\n", getwd()))
-cat(sprintf("API Key: %s\n", getOption("API")$key))
-cat("Command Line Arguments: ", args[-1], "\n")
+cat("Working Directory:", getwd(), "\n")
+cat("API Key:", apiGetKey(), "\n")
+cat("Command Line Arguments:", args[-1], "\n")
 
-con <- dbCreateDB(dbname = file.path(args[1], "flight.db"))
-resp.post <- CreateSession(orig = args[2], dest = args[3], startDate = args[4],
-                           returnDate = flightscanner:::Args2null(args[5]))
-resp.get <- PollSession(respondPOST = resp.post)
-SaveData(con, x = resp.get)
-DBI::dbDisconnect(con)
+name_dbfile <- paste0("flight_", paste(args[-1], collapse = "_"), ".db")
+con <- dbCreateDB(dbname = file.path(args[1], name_dbfile))
+resp <- apiCreateSession(orig = args[2], dest = args[3], startDate = args[4],
+                         returnDate = flightscanner:::Args2Null(args[5]))
+resp <- apiPollSession(resp)
+dbSaveData(resp, con)
+dbDisconnect(con)
 cat("\n\n")

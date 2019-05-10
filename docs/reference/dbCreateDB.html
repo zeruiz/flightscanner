@@ -32,8 +32,10 @@
 
 <meta property="og:title" content="Connect to a SQLite database and create tables. — dbCreateDB" />
 
-<meta property="og:description" content="Connect to a SQLite database file. And check it the following tables exists:
-price, itinerary, leg, segment, carrier, agent, and place. If not, create them." />
+<meta property="og:description" content="Connect to a SQLite database file. And check it the following tables exists: price,
+itinerary, leg, segment, carrier, agent, and place. If not, create them." />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -79,6 +81,18 @@ price, itinerary, leg, segment, carrier, agent, and place. If not, create them."
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette.html">Flightscanner: Find the Best Flight For You!</a>
+    </li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -107,8 +121,8 @@ price, itinerary, leg, segment, carrier, agent, and place. If not, create them."
 
     <div class="ref-description">
     
-    <p>Connect to a SQLite database file. And check it the following tables exists:
-price, itinerary, leg, segment, carrier, agent, and place. If not, create them.</p>
+    <p>Connect to a SQLite database file. And check it the following tables exists: price,
+itinerary, leg, segment, carrier, agent, and place. If not, create them.</p>
     
     </div>
 
@@ -119,14 +133,14 @@ price, itinerary, leg, segment, carrier, agent, and place. If not, create them.<
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>conn</th>
-      <td><p>A <code><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLiteDriver-class'>SQLiteDriver</a></code>
-or <code><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLiteConnection-class'>SQLiteConnection</a></code>.</p></td>
+      <td><p>A <code><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLiteDriver-class'>SQLiteDriver</a></code> or
+<code><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLiteConnection-class'>SQLiteConnection</a></code>.</p></td>
     </tr>
     <tr>
       <th>dbname</th>
       <td><p>The path to the database file. Don't use two exceptions:</p><ul>
-<li><p><code>""</code> will create a temporary on-disk database.
-  The file will be deleted when the connection is closed.</p></li>
+<li><p><code>""</code> will create a temporary on-disk database. The file will be deleted when the
+  connection is closed.</p></li>
 <li><p><code>":memory:"</code> or <code>"file::memory:"</code> will create a temporary in-memory database.</p></li>
 </ul></td>
     </tr>
@@ -134,15 +148,13 @@ or <code><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLiteC
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLiteConnection-class'>SQLiteConnection</a></code>.
-If can't connect to SQLite driver, return 1.</p>
+    <p>An object of class <code><a href='https://www.rdocumentation.org/packages/RSQLite/topics/SQLiteConnection-class'>SQLiteConnection</a></code>. If
+can't connect to SQLite driver, return 1.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>dbCreateDB</span>(<span class='kw'>dbname</span> <span class='kw'>=</span> <span class='st'>"flight.db"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/unlink'>unlink</a></span>(<span class='st'>"flight.db"</span>)
-<span class='co'># }</span></pre>
+    <pre class="examples"><div class='input'><span class='no'>con</span> <span class='kw'>&lt;-</span> <span class='fu'>dbCreateDB</span>(<span class='kw'>dbname</span> <span class='kw'>=</span> <span class='st'>":memory:"</span>)
+<span class='fu'><a href='dbDisconnect.html'>dbDisconnect</a></span>(<span class='no'>con</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

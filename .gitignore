@@ -5,4 +5,5 @@
 .Ruserdata
 .DS_Store
 flightscanner.Rproj
-API_key.txt
+APIkey.txt
+inst/doc

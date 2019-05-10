@@ -1,4 +1,4 @@
-.onLoad <- function(libname, pkgname) {
-  CheckAPIkey()
+.onAttach <- function(libname, pkgname) {
+  apiCheckKey()
   invisible()
 }

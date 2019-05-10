@@ -6,57 +6,38 @@ library(flightscanner)
 # usethis::use_r("")
 # usethis::use_pipe()
 # usethis::use_testthat()
-# usethis::use_test("api")
+# usethis::use_test("")
 # usethis::use_git()
 # usethis::use_git_config()
 # usethis::use_github(auth_token = "")
 # usethis::use_package("httr")
+# usethis::use_vignette("use_flightscanner", "How to use flightscanner")
 # usethis::use_pkgdown()
-usethis::use_travis()
-usethis::use_coverage()
+# usethis::use_travis()
+# usethis::use_coverage()
 
 devtools::document()
 pkgdown::build_site()
 
-
 # ----------------------------------------------------------------------------
-# header information
-SetAPI(host = "skyscanner-skyscanner-flight-search-v1.p.rapidapi.com",
-       key = "3e85a0e43cmshac6dba6fde57066p1c1145jsn1e6f8c3d0e33")
-# getOption("API")
-
+apiSetKey("3e85a0e43cmshac6dba6fde57066p1c1145jsn1e6f8c3d0e33")
+apiGetKey()
 
 ### Create session - Live Flight Search
-resp.post <- CreateSession(orig = "SEA", dest = "PVG", startDate = "2019-06-15")
-# resp.post
-
+resp.post <- apiCreateSession(orig = "SEA", dest = "PVG", startDate = "2019-06-15")
 
 ### Poll session - Live Flight Search
-resp.get <- PollSession(respondPOST = resp.post)
-# resp.get
-
+resp.get <- apiPollSession(resp.post)
 res <- httr::content(resp.get)
 
-
 ### Browse Quotes - Browse Flight Prices
-resp.quote <- BrowseFlight("quotes", orig = "DSM", dest = "DTW", start = "2019-05-01", return = NULL)
-resp.quote
-httr::headers(resp.quote)
-glimpse(resp.quote)
+resp.quote <- apiBrowseFlight("quotes", orig = "DSM", dest = "DTW", start = "2019-05-01", return = NULL)
 httr::content(resp.quote)
 
-
 ### Browse Routes - Browse Flight Prices
-resp.route <- BrowseFlight("routes", orig = "DSM", dest = "DTW", start = "2019-05-01", return = NULL)
-resp.route
-httr::headers(resp.route)
-glimpse(resp.route)
+resp.route <- apiBrowseFlight("routes", orig = "DSM", dest = "DTW", start = "2019-05-01", return = NULL)
 httr::content(resp.route)
 
-
 ### Browse Dates - Browse Flight Prices
-resp.date <- BrowseFlight("dates", orig = "DSM", dest = "DTW", start = "2019-05-01", return = NULL)
-resp.date
-httr::headers(resp.date)
-glimpse(resp.date)
+resp.date <- apiBrowseFlight("dates", orig = "DSM", dest = "DTW", start = "2019-05-01", return = NULL)
 httr::content(resp.date)

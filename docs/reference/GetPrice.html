@@ -32,9 +32,9 @@
 
 <meta property="og:title" content="Extract price information from request response. — GetPrice" />
 
-<meta property="og:description" content="Extract information from request response of live flight search endpoint.
-Information includes the SearchTime, ItineraryId (OutboundLegId, InboundLegId), and PricingOptions.
-PricingOptions contains the AgentId, Price, and LinkURL." />
+<meta property="og:description" content="Extract information from request response of live flight search endpoint." />
+
+<meta property="og:image" content="/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -80,6 +80,18 @@ PricingOptions contains the AgentId, Price, and LinkURL." />
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/vignette.html">Flightscanner: Find the Best Flight For You!</a>
+    </li>
+  </ul>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -108,13 +120,23 @@ PricingOptions contains the AgentId, Price, and LinkURL." />
 
     <div class="ref-description">
     
-    <p>Extract information from request response of live flight search endpoint.
-Information includes the SearchTime, ItineraryId (OutboundLegId, InboundLegId), and PricingOptions.</p>
-<p>PricingOptions contains the AgentId, Price, and LinkURL.</p>
+    <p>Extract information from request response of live flight search endpoint.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>GetPrice</span>(<span class='no'>x</span>)</pre>
+    <pre class="usage"><span class='fu'>GetPrice</span>(<span class='no'>x</span>)
+
+<span class='fu'>GetItineraries</span>(<span class='no'>x</span>, <span class='kw'>price</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>GetLegs</span>(<span class='no'>x</span>)
+
+<span class='fu'>GetSegments</span>(<span class='no'>x</span>)
+
+<span class='fu'>GetCarriers</span>(<span class='no'>x</span>)
+
+<span class='fu'>GetAgents</span>(<span class='no'>x</span>)
+
+<span class='fu'>GetPlaces</span>(<span class='no'>x</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -123,19 +145,44 @@ Information includes the SearchTime, ItineraryId (OutboundLegId, InboundLegId), 
       <th>x</th>
       <td><p>A request object.</p></td>
     </tr>
+    <tr>
+      <th>price</th>
+      <td><p>If <code>TRUE</code>, also includes PricingOptions information.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A tibble.</p>
     
+    <h2 class="hasAnchor" id="functions"><a class="anchor" href="#functions"></a>Functions</h2>
+
+    <ul>
+<li><p><code>GetPrice</code>: Includes the SearchTime, ItineraryId (OutboundLegId, InboundLegId), and
+PricingOptions. PricingOptions includes the AgentId, Price, and LinkURL.</p></li>
+<li><p><code>GetItineraries</code>: Includes the ItineraryId (OutboundLegId, InboundLegId).</p></li>
+<li><p><code>GetLegs</code>: Includes the LegId, SegmentIds, OriginId, DestinationId, DepartureTime,
+ArrivalTime, Duration, No.Stops, and Stops. Stops includes the StopId, and Layover.</p></li>
+<li><p><code>GetSegments</code>: Includes the SegmentId, OriginId, DestinationId, DepartureTime, ArrivalTime,
+Duration, CarrierId, OperatingCarrierId, and FlightNumber.</p></li>
+<li><p><code>GetCarriers</code>: Includes the CarrierId, Code, Name, and ImageURL.</p></li>
+<li><p><code>GetAgents</code>: Includes the AgentId, Name, ImageURL, and Type.</p></li>
+<li><p><code>GetPlaces</code>: Includes the PlaceId, ParentId, Code, Type and Name.</p></li>
+</ul>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='SetAPI.html'>SetAPI</a></span>(<span class='st'>"skyscanner-skyscanner-flight-search-v1.p.rapidapi.com"</span>, <span class='st'>"YOUR_API_KEY"</span>)
-<span class='no'>resp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='CreateSession.html'>CreateSession</a></span>(<span class='kw'>origin</span> <span class='kw'>=</span> <span class='st'>"SFO"</span>, <span class='kw'>destination</span> <span class='kw'>=</span> <span class='st'>"LHR"</span>, <span class='kw'>startDate</span> <span class='kw'>=</span> <span class='st'>"2019-07-01"</span>)
-<span class='no'>resp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='PollSession.html'>PollSession</a></span>(<span class='kw'>respondPOST</span> <span class='kw'>=</span> <span class='no'>resp</span>)
+<span class='fu'><a href='apiSetKey.html'>apiSetKey</a></span>(<span class='st'>"YOUR_API_KEY"</span>)
+<span class='no'>resp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='apiCreateSession.html'>apiCreateSession</a></span>(<span class='kw'>origin</span> <span class='kw'>=</span> <span class='st'>"SFO"</span>, <span class='kw'>destination</span> <span class='kw'>=</span> <span class='st'>"LHR"</span>, <span class='kw'>startDate</span> <span class='kw'>=</span> <span class='st'>"2019-07-01"</span>)
+<span class='no'>resp</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='apiPollSession.html'>apiPollSession</a></span>(<span class='no'>resp</span>)
 <span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/GetPrice'>GetPrice</a></span>(<span class='no'>resp</span>)
+<span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/GetPrice'>GetItineraries</a></span>(<span class='no'>resp</span>)
+<span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/GetPrice'>GetLegs</a></span>(<span class='no'>resp</span>)
+<span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/GetPrice'>GetSegments</a></span>(<span class='no'>resp</span>)
+<span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/GetPrice'>GetCarriers</a></span>(<span class='no'>resp</span>)
+<span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/GetPrice'>GetAgents</a></span>(<span class='no'>resp</span>)
+<span class='kw pkg'>flightscanner</span><span class='kw ns'>:::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/flightscanner/topics/GetPrice'>GetPlaces</a></span>(<span class='no'>resp</span>)
 <span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -144,6 +191,8 @@ Information includes the SearchTime, ItineraryId (OutboundLegId, InboundLegId), 
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#functions">Functions</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

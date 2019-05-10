@@ -1,5 +1,6 @@
+library(flightscanner)
 # library(taskscheduleR)  # Windows
-library(cronR)  # Unix/Linux
+# library(cronR)  # Unix/Linux
 
 # rstudioapi::getPersistentValue
 # rstudioapi::jobRunScript()
@@ -14,11 +15,15 @@ library(cronR)  # Unix/Linux
 # cron_rstudioaddin()
 
 # Create cron job
-CreateJob("DSM", "DTW", "2019-06-01", path = file.path(getwd(), "inst"), frequency = "minutely")
-# CreateJob("DSM", "DTW", "2019-06-01", path = file.path(getwd(), "inst"), frequency = "hourly")
-# CreateJob("DSM", "DTW", "2019-06-01", path = file.path(getwd(), "inst"), frequency = "daily", at = "3AM")
+apiSetKey("23d5e72978msh9f54564c51ae7d9p11f285jsna232a1fe2fdb")
+cron_create("DSM", "PVG", "2019-06-01", path = file.path(getwd(), "inst"), frequency = "0 0-23/2 * * *")
+cron_create("DSM", "DTW", "2019-06-10", frequency = "daily")
 
-## Get all the jobs
-cron_njobs()
-cron_clear(ask = FALSE)
+con <- dbCreateDB(dbname = "inst/flight_DSM_PVG_2019-06-01.db")
+data <- flightGet(con)
+
+# Get all the jobs
 cron_ls()
+
+# Clear all the jobs
+cron_clear(ask = FALSE)

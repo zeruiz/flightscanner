@@ -1,23 +1,37 @@
 context("test-api")
 
-test_that("CreateSession function inputs are correct", {
-  expect_error(CreateSession(origin = 123, destination = "DSM", startDate = "2019-06-10"))
-  expect_error(CreateSession(origin = "DSM", destination = 123, startDate = "2019-06-10"))
-  expect_error(CreateSession(origin = "DSM", destination = "ORD", startDate = "2019"))
-  expect_error(CreateSession(origin = "DSM", destination = "ORD", startDate = "2019-06-10", returnDate = "ISU"))
-  expect_error(CreateSession(origin = "DSM", destination = "ORD", startDate = "2019-06-10", returnDate = "2019-06-01"))
-  expect_error(CreateSession(origin = "DSM", destination = "ORD", startDate = "2019-06-10", adults = "4"))
+apiSetKey("fefb4945e2msh1d70bbb54d6ef9bp1901acjsn9d9be332a30e")
+
+test_that("Function apiCheckKey doesn't work.", {
+  expect_silent(apiCheckKey())
+  apiSetKey(NULL)
+  expect_silent(apiCheckKey())
 })
 
-test_that("CreateSession function output type is correct",{
-  expect_class(CreateSession(origin = "DSM", destination = "ORD", startDate = "2019-06-10"), "response")
+test_that("Function apiCheckStatus doesn't work.", {
+  expect_true(apiCheckStatus(200L))
+  expect_warning(apiCheckStatus(404L))
 })
 
-test_that("PollSession function input sort type and order is correct",{
-  expect_error(PollSession(sortType = "time"))
-  expect_error(PollSession(sortOrder = "increase"))
+test_that("Function apiCreateSession doesn't work.", {
+  expect_error(apiCreateSession(123, "DSM", "2019-06-10"))
+  expect_error(apiCreateSession("DSM", 123, "2019-06-10"))
+  expect_error(apiCreateSession("DSM", "ORD", "2019-06-10", returnDate = "2019-06-01"))
+  expect_error(apiCreateSession("DSM", "ORD", "2019-06-10", adults = "as"))
+  resp <- apiCreateSession("DSM", "ORD", "2019-06-10")
+  expect_identical(http_status(resp)$category, "Success")
 })
 
-test_that("PollSession function output type is correct",{
-  expect_class(PollSession(), "response")
+test_that("Function apiPollSession doesn't work.", {
+  expect_error(apiPollSession(sortType = "time"))
+  expect_error(apiPollSession(sortOrder = "increase"))
+  resp <- apiPollSession(apiCreateSession("DSM", "ORD", "2019-06-10"))
+  expect_identical(http_status(resp)$category, "Success")
+})
+
+test_that("Function apiBrowseFlight doesn't work.", {
+  expect_error(apiBrowseFlight("quotes", 233, "DTW", "2019-06-01", returnDate = NULL))
+  expect_error(apiBrowseFlight("quotes", "DSM", "DTW", "2019-06-10", returnDate = "2019-06-01"))
+  resp <- apiBrowseFlight("quotes", "DSM", "DTW", "2019-06-01", returnDate = NULL)
+  expect_identical(http_status(resp)$category, "Success")
 })
